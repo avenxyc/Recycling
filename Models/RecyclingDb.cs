@@ -8,7 +8,12 @@ namespace Recycling.Models
 {
     public class RecyclingDb : DbContext
     {
+        public RecyclingDb() : base("name=DefaultConnection")
+        {
+
+        }
         public DbSet<Product> Products { get; set; }
         public DbSet<Consituent> Constituents { get; set; }
+
     }
 }
