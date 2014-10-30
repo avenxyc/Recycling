@@ -17,7 +17,7 @@ namespace Recycling.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "This is my contact information:";
 
             return View();
         }

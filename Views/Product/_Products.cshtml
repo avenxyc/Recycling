@@ -1,12 +1,7 @@
-﻿@model IEnumerable<Product>
+﻿@model IPagedList<Product>
 
 
 <div id="productList">
-
-    @*<div class="pagedList" data-rp-target="#productList">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
-            PagedListRenderOptions.MinimalWithItemCountText)
-        </div>*@
     <table class="table">
         <tr>
             <th>
@@ -21,7 +16,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.First().Weight)
             </th>
-            <th></th>
+            <th>More Options</th>
         </tr>
 
         @foreach (var item in Model)
@@ -47,4 +42,12 @@
             </tr>
         }
     </table>
+    <div class="pagedList" data-rp-target="#productList">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "Get",
+            UpdateTargetId = "productList"
+        }))
+    </div>
 </div>

@@ -1,12 +1,8 @@
-﻿@model IEnumerable<Product>
+﻿@model IPagedList<Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Product Info";
 }
-
-<div class="heading">
-    <h1>Index</h1>
-</div>
 
 <div>
     <img id="product_index_img" src="~/Content/Images/green-background.png" alt="Headline" />
@@ -20,15 +16,14 @@
                    placeholder="Please enter a key word..."
                    data-rp-autocomplete="@Url.Action("Autocomplete")" />
             <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">Seach By UPC&Name</button>
+                <button class="btn btn-success" type="submit">Seach By UPC&Name</button>
+                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
             </span>
         </div>
     </form>
 </div>
 
 
-
-@Html.ActionLink("Create New", "Create")
 
 
 

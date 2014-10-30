@@ -31,7 +31,7 @@ namespace Recycling.Controllers
         }
 
         // GET: Database
-        public ActionResult Index(string searchTerm = null)
+        public ActionResult Index(string searchTerm = null, int page = 1)
         {
             // Conventional Syntax
             // var product =
@@ -42,7 +42,7 @@ namespace Recycling.Controllers
             //          p.Name.Contains(searchTerm)
             //    orderby p.Name ascending
             //    select p;
-            
+
             // Extention Systax
             var product =
                 db.Products
@@ -51,18 +51,15 @@ namespace Recycling.Controllers
                            p.Name.Contains(searchTerm))
                   .OrderBy(p => p.Name)
                   .Select(p => p)
-                  .Take(10);
+                  .ToPagedList(page, 10);
 
-            // product.ToPagedList(page, 10);
-
-            if (Request.IsAjaxRequest())
+            var is_Ajax = Request.IsAjaxRequest();
+            if (is_Ajax)
             {
-                
-                Content("This is a test");
                 return PartialView("_Products", product);
-
             }
-                return View(product);
+
+            return View(product);
         }
 
 
@@ -83,6 +80,7 @@ namespace Recycling.Controllers
         }
 
         // GET: Product/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -92,6 +90,7 @@ namespace Recycling.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UPC,Name,CompanyName,ParentCompany,Weight,TotalWeight,Category,Image")] Product product)
         {
