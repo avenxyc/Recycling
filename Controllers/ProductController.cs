@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Recycling.Models;
+using PagedList;
 
 namespace Recycling.Controllers
 {
@@ -14,22 +15,58 @@ namespace Recycling.Controllers
     {
         private RecyclingDb db = new RecyclingDb();
 
+        // Get: Product/Autocomplete
+        public ActionResult Autocomplete(string term)
+        {
+            var model =
+                db.Products
+                .Where(p => p.Name.StartsWith(term) ||
+                            p.UPC.Contains(term))
+                .Take(10)
+                .Select(p => new
+                {
+                    label = p.Name
+                });
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Database
         public ActionResult Index(string searchTerm = null)
         {
+            // Conventional Syntax
+            // var product =
+            //    from p in db.Products
+            //    // make searchTerm null to show all the data
+            //    where searchTerm == null ||
+            //          p.UPC.Contains(searchTerm) ||
+            //          p.Name.Contains(searchTerm)
+            //    orderby p.Name ascending
+            //    select p;
+            
+            // Extention Systax
             var product =
-                from p in db.Products
-                // make searchTerm null to show all the data
-                where searchTerm == null ||
-                      p.UPC.Contains(searchTerm) ||
-                      p.Name.Contains(searchTerm)
-                orderby p.Name ascending
-                select p;
+                db.Products
+                  .Where(p => searchTerm == null ||
+                           p.UPC.Contains(searchTerm) ||
+                           p.Name.Contains(searchTerm))
+                  .OrderBy(p => p.Name)
+                  .Select(p => p)
+                  .Take(10);
 
-            return View(product);
+            // product.ToPagedList(page, 10);
+
+            if (Request.IsAjaxRequest())
+            {
+                
+                Content("This is a test");
+                return PartialView("_Products", product);
+
+            }
+                return View(product);
         }
 
-        // GET: Product/Details/5
+
+        // GET: Product/Details/
         public ActionResult Details(string id)
         {
             if (id == null)

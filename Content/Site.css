@@ -21,7 +21,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 1200px;
 }
 
 /* Change the bahavior of Carousel text align*/
@@ -34,3 +34,14 @@ textarea {
 footer p {
     text-align: center;
 }
+
+/*Product Index image style*/
+#product_index_img {
+    width: 100%;
+}
+
+/*Change Product Search box behavior*/
+.product_search {
+    margin-top: 3px;
+    width: 100%;
+

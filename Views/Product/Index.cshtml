@@ -1,62 +1,40 @@
-﻿@model IEnumerable<Recycling.Models.Product>
+﻿@model IEnumerable<Product>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="heading">
+    <h1>Index</h1>
+</div>
 
-<form action="@Url.Action("Index","Product")" method="get">
-    <input type="search" name="searchTerm" />
-    <input type="submit" value="Seach By UPC&Name" />
+<div>
+    <img id="product_index_img" src="~/Content/Images/green-background.png" alt="Headline" />
+</div>
 
-</form>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UPC)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Weight)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th></th>
-    </tr>
+<div class="product_search">
+    <form method="get" action="@Url.Action("Index")"
+          data-rp-ajax="true" data-rp-target="#productList">
+        <div class="input-group">
+            <input type="search" class="form-control" name="searchTerm" 
+                   placeholder="Please enter a key word..."
+                   data-rp-autocomplete="@Url.Action("Autocomplete")" />
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">Seach By UPC&Name</button>
+            </span>
+        </div>
+    </form>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <th>
-            @Html.DisplayFor(modelItem => item.UPC)
-        </th>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UPC }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UPC }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UPC })
-        </td>
-    </tr>
-}
 
-</table>
+
+@Html.ActionLink("Create New", "Create")
+
+
+
+<div class="product_index">
+
+    @Html.Partial("_Products", Model)
+
+</div>
+

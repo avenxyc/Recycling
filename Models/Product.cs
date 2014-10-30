@@ -37,7 +37,7 @@ namespace Recycling.Models
     public class Product //: IValidatableObject
     {
         [Key]
-        public string UPC { get; set; }
+        public virtual string UPC { get; set; }
         public string Name { get; set; }
         public string CompanyName { get; set; }
         public string ParentCompany { get; set; }

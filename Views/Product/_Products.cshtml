@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Product>
+
+
+<div id="productList">
+
+    @*<div class="pagedList" data-rp-target="#productList">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+            PagedListRenderOptions.MinimalWithItemCountText)
+        </div>*@
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().UPC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Weight)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(ProductItem => item.UPC)
+                </th>
+                <td>
+                    @Html.DisplayFor(ProductItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(ProductItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(ProductItem => item.Weight)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UPC }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UPC }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UPC })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

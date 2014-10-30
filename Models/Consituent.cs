@@ -11,7 +11,7 @@ namespace Recycling.Models
         [Key]
         public string ConstituentName { get; set; }
         public string Type { get; set; }
-        public int ProductUPC { get; set; }
+        public string ProductUPC { get; set; }
 
     }
 }
