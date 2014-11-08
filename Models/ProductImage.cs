@@ -12,17 +12,13 @@ namespace Recycling.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class ProductImage
     {
         public string UPC { get; set; }
-        public string Name { get; set; }
-        public string CompanyName { get; set; }
-        public string ParentCompany { get; set; }
-        public double Weight { get; set; }
-        public double TotalWeight { get; set; }
-        public string Category { get; set; }
+        public string Description { get; set; }
+        public System.DateTime UploadDate { get; set; }
+        public byte[] ImageFile { get; set; }
     
-        public virtual ICollection<ProductHasConstituent> ProductHasConstituents { get; set; }
-        public virtual ProductImage ProductImage { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

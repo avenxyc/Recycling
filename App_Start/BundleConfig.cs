@@ -32,7 +32,8 @@ namespace Recycling
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-customized.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/themes/base/*.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

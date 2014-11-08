@@ -12,17 +12,18 @@ namespace Recycling.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Constituent
     {
-        public string UPC { get; set; }
-        public string Name { get; set; }
-        public string CompanyName { get; set; }
-        public string ParentCompany { get; set; }
-        public double Weight { get; set; }
-        public double TotalWeight { get; set; }
-        public string Category { get; set; }
+        public Constituent()
+        {
+            this.LocatedIns = new HashSet<LocatedIn>();
+            this.ProductHasConstituents = new HashSet<ProductHasConstituent>();
+        }
     
+        public string ConstituentName { get; set; }
+        public string Type { get; set; }
+    
+        public virtual ICollection<LocatedIn> LocatedIns { get; set; }
         public virtual ICollection<ProductHasConstituent> ProductHasConstituents { get; set; }
-        public virtual ProductImage ProductImage { get; set; }
     }
 }

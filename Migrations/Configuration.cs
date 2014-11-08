@@ -35,8 +35,8 @@ namespace Recycling.Migrations
             //      TotalWeight = 250,
             //      ParentCompany = "Kraft",
             //      Constituents =
-            //            new List<Consituent> {           
-            //                    new Consituent {
+            //            new List<Constituent> {           
+            //                    new Constituent {
             //                    ConstituentName = "Plastic bag",
             //                    Type = "Plastic",
             //                }
@@ -45,30 +45,20 @@ namespace Recycling.Migrations
                   
             //  }
             //);
-            
-            for(int i = 0; i< 1000; i++)
+
+            for (int i = 0; i < 1000; i++)
             {
-              context.Products.AddOrUpdate(
-              p => p.UPC,
-              new Product
-              {
-                  UPC = i.ToString(),
-                  Name = "Oreo" + i.ToString(),
-                  CompanyName = "Christie" + i.ToString(),
-                  Weight = 200,
-                  TotalWeight = 250,
-                  ParentCompany = "Kraft" + i.ToString(),
-                  Constituents =
-                        new List<Consituent> {           
-                                new Consituent {
-                                ConstituentName = "Plastic bag" + i,
-                                Type = "Plastic" + i,
-                                ProductUPC = i.ToString()
-                            }
-                        }
-
-
-              });
+                context.Products.AddOrUpdate(
+                p => p.UPC,
+                new Product
+                {
+                    UPC = i.ToString(),
+                    Name = "Oreo" + i.ToString(),
+                    CompanyName = "Christie" + i.ToString(),
+                    Weight = 200,
+                    TotalWeight = 250,
+                    ParentCompany = "Kraft" + i.ToString(),
+                });
             }
         }
     }

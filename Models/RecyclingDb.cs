@@ -13,7 +13,11 @@ namespace Recycling.Models
 
         }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Consituent> Constituents { get; set; }
+        public DbSet<Constituent> Constituents { get; set; }
+        public DbSet<ProductHasConstituent> ProductHasConstituents { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<LocatedIn> LocatedIns { get; set; }
 
     }
 }

@@ -12,17 +12,15 @@ namespace Recycling.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Region
     {
-        public string UPC { get; set; }
-        public string Name { get; set; }
-        public string CompanyName { get; set; }
-        public string ParentCompany { get; set; }
-        public double Weight { get; set; }
-        public double TotalWeight { get; set; }
-        public string Category { get; set; }
+        public Region()
+        {
+            this.LocatedIns = new HashSet<LocatedIn>();
+        }
     
-        public virtual ICollection<ProductHasConstituent> ProductHasConstituents { get; set; }
-        public virtual ProductImage ProductImage { get; set; }
+        public string RegionName { get; set; }
+    
+        public virtual ICollection<LocatedIn> LocatedIns { get; set; }
     }
 }
