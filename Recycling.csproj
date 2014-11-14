@@ -182,12 +182,21 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201411080132258_InitialMigaration.cs" />
     <Compile Include="Migrations\201411080132258_InitialMigaration.Designer.cs">
       <DependentUpon>201411080132258_InitialMigaration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411110335484_ModifyImageTable.cs" />
+    <Compile Include="Migrations\201411110335484_ModifyImageTable.Designer.cs">
+      <DependentUpon>201411110335484_ModifyImageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411140052371_DatabaseModified.cs" />
+    <Compile Include="Migrations\201411140052371_DatabaseModified.Designer.cs">
+      <DependentUpon>201411140052371_DatabaseModified.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -202,6 +211,7 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Models\ProductView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -320,9 +330,15 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\_Products.cshtml" />
+    <Content Include="Views\ProductImageView\View.cshtml" />
+    <Content Include="Views\ProductManage\Create.cshtml" />
+    <Content Include="Views\ProductManage\Details.cshtml" />
+    <Content Include="Views\ProductManage\Index.cshtml" />
+    <Content Include="Views\ProductManage\_Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Uploaded\" />
     <Folder Include="Views\Constituent\" />
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +352,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411080132258_InitialMigaration.resx">
       <DependentUpon>201411080132258_InitialMigaration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411110335484_ModifyImageTable.resx">
+      <DependentUpon>201411110335484_ModifyImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411140052371_DatabaseModified.resx">
+      <DependentUpon>201411140052371_DatabaseModified.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

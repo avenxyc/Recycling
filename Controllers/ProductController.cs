@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Recycling.Models;
 using PagedList;
+using System.IO;
 
 namespace Recycling.Controllers
 {
@@ -80,20 +81,21 @@ namespace Recycling.Controllers
         }
 
         // GET: Product/Create
-        [Authorize]
+        //[Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Product/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UPC,Name,CompanyName,ParentCompany,Weight,TotalWeight,Category,Image")] Product product)
+        public ActionResult Create([Bind(Include = "UPC,Name,CompanyName,ParentCompany,Weight,TotalWeight,Category,ProductImage")] Product product)
         {
+            
+
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
@@ -158,6 +160,32 @@ namespace Recycling.Controllers
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UploadImage(HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                string pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(
+                                       Server.MapPath("~/Content/Images/Uploaded"), pic);
+                // file is uploaded
+                file.SaveAs(path);
+
+                // save the image path path to the database or you can send image 
+                // directly to database
+                // in-case if you want to store byte[] ie. for DB
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    file.InputStream.CopyTo(ms);
+                    byte[] array = ms.GetBuffer();
+                }
+
+                Console.Write("Test test");
+
+            }
+            // after successfully uploading redirect the user
             return RedirectToAction("Index");
         }
 

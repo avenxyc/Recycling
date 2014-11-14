@@ -1,0 +1,35 @@
+﻿@model IPagedList<Product>
+
+@{
+    ViewBag.Title = "Product Info";
+}
+
+<div>
+    <img id="product_index_img" src="~/Content/Images/green-background.png" alt="Headline" />
+</div>
+
+<div class="product_search">
+    <form method="get" action="@Url.Action("Index")"
+          data-rp-ajax="true" data-rp-target="#productList">
+        <div class="input-group">
+            <input type="search" class="form-control" name="searchTerm" 
+                   placeholder="Please enter a key word..."
+                   data-rp-autocomplete="@Url.Action("Autocomplete")" />
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="submit">Seach By UPC&Name</button>
+                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+            </span>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+<div class="product_index">
+
+    @Html.Partial("_Products", Model)
+
+</div>
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -20,10 +21,13 @@ namespace Recycling.Models
         public string ParentCompany { get; set; }
         public double Weight { get; set; }
         public double TotalWeight { get; set; }
+        [DisplayName("Number of Constituents")]
+        public uint NumberOfConstituent { get; set; }
 
         public string Category { get; set; }
-    
+
         public virtual ICollection<ProductHasConstituent> ProductHasConstituents { get; set; }
+        [DisplayName("Upload Image")]
         public virtual ProductImage ProductImage { get; set; }
     }
 }
