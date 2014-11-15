@@ -14,7 +14,7 @@ namespace Recycling.Models
         [StringLength(13, ErrorMessage = "The UPC code should be 13 digits.")]
         public string UPC { get; set; }
         [StringLength(30, ErrorMessage = "The Product Name is limited under 30 charaters.")]
-        public string Name { get; set; }
+        public string ProductName { get; set; }
         [StringLength(30, ErrorMessage = "The Company Name is limited under 30 charaters.")]
         public string CompanyName { get; set; }
         [StringLength(30, ErrorMessage = "The Parent Company Name is limited under 30 charaters.")]

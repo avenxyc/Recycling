@@ -53,7 +53,7 @@ namespace Recycling.Migrations
                 new Product
                 {
                     UPC = i.ToString(),
-                    Name = "Oreo" + i.ToString(),
+                    ProductName = "Oreo" + i.ToString(),
                     CompanyName = "Christie" + i.ToString(),
                     Weight = 200,
                     TotalWeight = 250,

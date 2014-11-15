@@ -21,12 +21,12 @@ namespace Recycling.Controllers
         {
             var model =
                 db.Products
-                .Where(p => p.Name.StartsWith(term) ||
+                .Where(p => p.ProductName.StartsWith(term) ||
                             p.UPC.Contains(term))
                 .Take(10)
                 .Select(p => new
                 {
-                    label = p.Name
+                    label = p.ProductName
                 });
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -49,8 +49,8 @@ namespace Recycling.Controllers
                 db.Products
                   .Where(p => searchTerm == null ||
                            p.UPC.Contains(searchTerm) ||
-                           p.Name.Contains(searchTerm))
-                  .OrderBy(p => p.Name)
+                           p.ProductName.Contains(searchTerm))
+                  .OrderBy(p => p.ProductName)
                   .Select(p => p)
                   .ToPagedList(page, 10);
 
@@ -76,7 +76,7 @@ namespace Recycling.Controllers
                 //return View("NotFound");
                 return HttpNotFound();
             }
-            
+
             return View(model);
         }
 
@@ -92,21 +92,67 @@ namespace Recycling.Controllers
         {
             try
             {
+                // Save Image to server and URL to ProductImage model
+                HttpPostedFileBase file = Request.Files["ProductImage"];
+                var upc = collection["UPC"];
+                // Verify that the user selected a file
+                if (file != null && file.ContentLength > 0)
+                {
+                    if (file.ContentType == "image/jpeg" ||
+                        file.ContentType == "image/jpg" ||
+                        file.ContentType == "image/png")
+                    {
+                        // extract only the fielname
+                        var fileExtension = Path.GetExtension(file.FileName);
+                        // store the file inside ~/App_Data/uploads folder
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Uploaded"), upc + fileExtension);
+                        file.SaveAs(path);
+                        var productImage = new ProductImage();
+                        productImage.ImageUrl = path;
+                    }
+
+                }
+
+
+                //int cnumber = Request.Form["cname"].Count();
+                //Console.Write(cnumber);
+
                 var newproduct = new ProductView();
-                var ConstituentList = new List<Constituent> {};
-                var region = new Region();
+                var constituentList = new List<Constituent> { };
+                var productHasConstituents = new List<ProductHasConstituent> { };
+                var locatedIn = new LocatedIn();
 
-                newproduct.UPC = collection["UPC"];
-                newproduct.ProductName = collection["ProductName"];
-                region.RegionName = collection["Region"];
-                
+                string[] cnames = collection["cform[cname][]"].Split(',');
+                string[] cpweights = collection["cform[pweight][]"].Split(',');
+                string[] cType = collection["cform[Type][]"].Split(',');
+                string[] cclassifications = collection["cform[classification][]"].Split(',');
+
+
+                string [][] ccollection = {cnames, cpweights, cType, cclassifications};
                 
 
-                _names.Add(newproduct);
+                
+
+
+
+                if (ModelState.IsValid)
+                {
+                    //db.Products.Add(product);
+                    //db.SaveChanges();
+                    newproduct.UPC = collection["UPC"];
+                    newproduct.ProductName = collection["ProductName"];
+                    newproduct.CompanyName = collection["CompanyName"];
+                    newproduct.ParentCompany = collection["ParentCompany"];
+                    newproduct.Weight = double.Parse(collection["weight"]);
+                    newproduct.TotalWeight = double.Parse(collection["TotalWeight"]);
+                    newproduct.NumberOfConstituent = uint.Parse(collection["NumberOfConstituent"]);
+                    _names.Add(newproduct);
+                }
 
                 //return RedirectToAction("Index");
 
-                return(Json(_names, JsonRequestBehavior.AllowGet));
+
+                return (Json(ccollection, JsonRequestBehavior.AllowGet));
             }
             catch
             {

@@ -11,17 +11,22 @@ namespace Recycling.Models
     public class ProductView
     {
         [Key]
+        [Required]
+        [RegularExpression("^\\d{10,13}$", ErrorMessage = "UPC code must be a number between 10 and 13 digits.")]
         public string UPC { get; set; }
 
         [Required]
         [DisplayName("Product Name")]
+        [StringLength(40)]
         public string ProductName { get; set; }
 
         [Required]
         [DisplayName("Company Name")]
+        [StringLength(40)]
         public string CompanyName { get; set; }
 
         [DisplayName("Parent Company")]
+        [StringLength(40)]
         public string ParentCompany { get; set; }
 
         [Required]
@@ -31,6 +36,7 @@ namespace Recycling.Models
         [DisplayName("Total Weight")]
         public double TotalWeight { get; set; }
 
+        [Required]
         [DisplayName("Number of Constituents")]
         public uint NumberOfConstituent { get; set; }
 
@@ -39,7 +45,6 @@ namespace Recycling.Models
 
         public string ImageURL { get; set; }
 
-        public byte[] ProductImage { get; set; }
 
         [Required]
         [DisplayName("Part Weight")]

@@ -21,12 +21,12 @@ namespace Recycling.Controllers
         {
             var model =
                 db.Products
-                .Where(p => p.Name.StartsWith(term) ||
+                .Where(p => p.ProductName.StartsWith(term) ||
                             p.UPC.Contains(term))
                 .Take(10)
                 .Select(p => new
                 {
-                    label = p.Name
+                    label = p.ProductName
                 });
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -49,8 +49,8 @@ namespace Recycling.Controllers
                 db.Products
                   .Where(p => searchTerm == null ||
                            p.UPC.Contains(searchTerm) ||
-                           p.Name.Contains(searchTerm))
-                  .OrderBy(p => p.Name)
+                           p.ProductName.Contains(searchTerm))
+                  .OrderBy(p => p.ProductName)
                   .Select(p => p)
                   .ToPagedList(page, 10);
 

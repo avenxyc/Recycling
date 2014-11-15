@@ -1,8 +1,6 @@
-﻿
-
-$(document).ready(function () {
+﻿$(document).ready(function (){
     // Define Ajax Form Search Funtion
-    var ajaxFormSubmit = function () {
+    var ajaxFormSubmit = function (){
         var $form = $(this);
         var options = {
             url: $form.attr("action"),
@@ -121,28 +119,28 @@ $(document).ready(function () {
             <div class="form-group">\
                 <label class="control-label col-md-2" for="ConstituentName">Constituent Name</label>\
                 <div class="col-md-10">\
-                    <input class="form-control text-box single-line" id="ConstituentName" name="ConstituentName" type="text" value="" />\
+                    <input class="form-control text-box single-line" id="ConstituentName" name="cform[cname][]" type="text" value="" />\
                     <span class="field-validation-valid text-danger" data-valmsg-for="ConstituentName" data-valmsg-replace="true"></span>\
                 </div>\
             </div>\
             <div class="form-group">\
                 <label class="control-label col-md-2" for="PartWeight">Part Weight</label>\
                 <div class="col-md-10">\
-                    <input class="form-control text-box single-line" id="PartWeight" name="PartWeight" type="text" value="" />\
+                    <input class="form-control text-box single-line" id="PartWeight" name="cform[pweight][]" type="text" value="" />\
                     <span class="field-validation-valid text-danger" data-valmsg-for="PartWeight" data-valmsg-replace="true"></span>\
                 </div>\
             </div>\
             <div class="form-group">\
                 <label class="control-label col-md-2" for="Type">Type</label>\
                 <div class="col-md-10">\
-                    <input class="form-control text-box single-line" id="Type" name="Type" type="text" value="" />\
+                    <input class="form-control text-box single-line" id="Type" name="cform[type][]" type="text" value="" />\
                     <span class="field-validation-valid text-danger" data-valmsg-for="Type" data-valmsg-replace="true"></span>\
                 </div>\
             </div>\
             <div class="form-group">\
                 <label class="control-label col-md-2" for="Recyclability">Recyclability</label>\
                 <div class="col-md-10">\
-                    <input class="form-control text-box single-line" id="Recyclability" name="Recyclability" type="text" value="" />\
+                    <input class="form-control text-box single-line" id="Recyclability" name="cform[classification][]" type="text" value="" />\
                     <span class="field-validation-valid text-danger" data-valmsg-for="Recyclability" data-valmsg-replace="true"></span>\
                 </div>\
             </div>\
@@ -154,8 +152,8 @@ $(document).ready(function () {
 
             $('#Constituentlist').after(			//HTML code for constituents info
          "<div id='clist" + i + "'>" + clist_rest);
-        };
-    };
+        }
+    }
 
     $('#cnumber').change(displaycinfo); //Change the number of forms.
 });
