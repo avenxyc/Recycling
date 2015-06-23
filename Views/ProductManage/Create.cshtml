@@ -1,4 +1,4 @@
-﻿@model Recycling.Models.ProductView
+﻿@model ProductView
 
 @{
     ViewBag.Title = "Create";
@@ -90,13 +90,13 @@
             @Html.LabelFor(model => model.Region, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("Region", new List<SelectListItem> {
-                        new SelectListItem { Text = "HRM", Value = "1"},
-                        new SelectListItem { Text = "2", Value = "2"},
-                        new SelectListItem { Text = "3", Value = "3"},
-                        new SelectListItem { Text = "4", Value = "4"},
-                        new SelectListItem { Text = "5", Value = "5"},
-                        new SelectListItem { Text = "6", Value = "6"},
-                        new SelectListItem { Text = "7", Value = "7"}
+                        new SelectListItem { Text = "HRM", Value = "HRM"},
+                        new SelectListItem { Text = "Cape Breton", Value = "Cape Breton"},
+                        new SelectListItem { Text = "Eastern", Value = "Eastern"},
+                        new SelectListItem { Text = "Northern", Value = "Northern"},
+                        new SelectListItem { Text = "South Shore", Value = "South Shore"},
+                        new SelectListItem { Text = "Valley", Value = "Valley"},
+                        new SelectListItem { Text = "Western", Value = "Western"}
                     }, "-- Select Region --", htmlAttributes: new { @class = "btn btn-default dropdown-toggle" })
                 @Html.ValidationMessageFor(model => model.Region, "", new { @class = "text-danger" })
             </div>

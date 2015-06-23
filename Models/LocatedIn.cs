@@ -17,7 +17,6 @@ namespace Recycling.Models
         [Column(Order = 1)]
         [ForeignKey("Region")]
         public string RegionName { get; set; }
-        public string Classification { get; set; }
         public string Recyclability { get; set; }
 
         public virtual Constituent Constituent { get; set; }

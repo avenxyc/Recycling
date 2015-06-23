@@ -8,11 +8,16 @@ namespace Recycling.Models
 {
     public class Constituent
     {
-        [Key]
-        public string ConstituentName { get; set; }
-        public string Type { get; set; }
+        public Constituent()
+        {
+            LocatedIns = new HashSet<LocatedIn> { };
+            ProductHasConstituents = new HashSet<ProductHasConstituent> { };
+        }
 
-        public virtual ICollection<LocatedIn> LocatedIns { get; set; }
-        public virtual ICollection<ProductHasConstituent> ProductHasConstituents { get; set; }
+        public virtual string ConstituentName { get; set; }
+        public virtual string Type { get; set; }
+
+        public virtual ISet<LocatedIn> LocatedIns { get; set; }
+        public virtual ISet<ProductHasConstituent> ProductHasConstituents { get; set; }
     }
 }

@@ -64,21 +64,6 @@ namespace Recycling.Controllers
         }
 
 
-        // GET: Product/Details/
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Products.Find(id);
-            if (product == null)
-            {
-                //return View("NotFound");
-                return HttpNotFound();
-            }
-            return View(product);
-        }
 
         // GET: Product/Create
         //[Authorize]
@@ -103,6 +88,22 @@ namespace Recycling.Controllers
                 return RedirectToAction("Index");
             }
 
+            return View(product);
+        }
+
+        // GET: Product/Details/
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                //return View("NotFound");
+                return HttpNotFound();
+            }
             return View(product);
         }
 

@@ -19,7 +19,6 @@ namespace Recycling.Models
         public DbSet<Region> Regions { get; set; }
         public DbSet<LocatedIn> LocatedIns { get; set; }
 
-        public System.Data.Entity.DbSet<Recycling.Models.ProductView> ProductViews { get; set; }
 
     }
 }

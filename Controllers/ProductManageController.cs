@@ -63,6 +63,95 @@ namespace Recycling.Controllers
             return View(product);
         }
 
+        // GET: ProductManage/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: ProductManage/Create(FormCollection collection
+        [HttpPost]
+        public ActionResult Create([Bind(Include = "UPC,ProductName,CompanyName,ParentCompany,Weight,TotalWeight,Category")] Product product,
+                                   FormCollection collection)
+        {
+            try
+            {
+                // Save Image to server and URL to ProductImage model
+                HttpPostedFileBase file = Request.Files["ProductImage"];
+                // Verify that the user selected a file
+                if (file != null && file.ContentLength > 0)
+                {
+                    if (file.ContentType == "image/jpeg" ||
+                        file.ContentType == "image/jpg" ||
+                        file.ContentType == "image/png")
+                    {
+                        // extract only the fielname
+                        var fileExtension = Path.GetExtension(file.FileName);
+                        // store the file inside ~/App_Data/uploads folder
+                        var path = Path.Combine(Server.MapPath("~/Content/Images/Uploaded"), product.UPC + fileExtension);
+                        file.SaveAs(path);
+                        var productImage = new ProductImage();
+                        productImage.ImageUrl = path;
+                    }
+
+                }
+
+
+                // Get string of contituents and save them to string array
+                string[] cnames = collection["cform[cname][]"].Split(',');
+                string[] cpweights = collection["cform[pweight][]"].Split(',');
+                string[] cType = collection["cform[Type][]"].Split(',');
+                string[] cclassifications = collection["cform[classification][]"].Split(',');
+                // Get the number of constituents
+                int cnumber = cnames.Length;
+
+                if (ModelState.IsValid)
+                {
+                    // Add product to database
+                    db.Products.Add(product);
+                    db.Regions.Add(new Region
+                    {
+                        RegionName = collection["Region"]
+                    });
+                    // Save new constituents to the list 
+                    for (int i = 0; i < cnumber; i++)
+                    {
+                        db.Constituents.Add(
+                        new Constituent
+                            {
+                                ConstituentName = cnames[i],
+                                Type = cType[i]
+                            });
+
+                        db.ProductHasConstituents.Add(
+                            new ProductHasConstituent{
+                                UPC = product.UPC,
+                                ConstituentName = cnames[i],
+                                PartWeight = double.Parse(cpweights[i])
+                            });
+                        db.LocatedIns.Add(
+                            new LocatedIn{
+                                ConstituentName = cnames[i],
+                                RegionName = collection["Region"],
+                                Recyclability = cclassifications[i],
+                            });
+                    }
+
+                    return RedirectToAction("Detail", new { id = product.UPC });
+                }
+                 return RedirectToAction("Index");
+
+
+
+               // return (Json(product, JsonRequestBehavior.AllowGet));
+            }
+            catch
+            {
+
+                return HttpNotFound();
+            }
+        }
+
         // GET: ProductManage/Details/5
         public ActionResult Details(string id)
         {
@@ -77,87 +166,7 @@ namespace Recycling.Controllers
                 return HttpNotFound();
             }
 
-            return View(model);
-        }
-
-        // GET: ProductManage/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProductManage/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // Save Image to server and URL to ProductImage model
-                HttpPostedFileBase file = Request.Files["ProductImage"];
-                var upc = collection["UPC"];
-                // Verify that the user selected a file
-                if (file != null && file.ContentLength > 0)
-                {
-                    if (file.ContentType == "image/jpeg" ||
-                        file.ContentType == "image/jpg" ||
-                        file.ContentType == "image/png")
-                    {
-                        // extract only the fielname
-                        var fileExtension = Path.GetExtension(file.FileName);
-                        // store the file inside ~/App_Data/uploads folder
-                        var path = Path.Combine(Server.MapPath("~/Content/Images/Uploaded"), upc + fileExtension);
-                        file.SaveAs(path);
-                        var productImage = new ProductImage();
-                        productImage.ImageUrl = path;
-                    }
-
-                }
-
-
-                //int cnumber = Request.Form["cname"].Count();
-                //Console.Write(cnumber);
-
-                var newproduct = new ProductView();
-                var constituentList = new List<Constituent> { };
-                var productHasConstituents = new List<ProductHasConstituent> { };
-                var locatedIn = new LocatedIn();
-
-                string[] cnames = collection["cform[cname][]"].Split(',');
-                string[] cpweights = collection["cform[pweight][]"].Split(',');
-                string[] cType = collection["cform[Type][]"].Split(',');
-                string[] cclassifications = collection["cform[classification][]"].Split(',');
-
-
-                string [][] ccollection = {cnames, cpweights, cType, cclassifications};
-                
-
-                
-
-
-
-                if (ModelState.IsValid)
-                {
-                    //db.Products.Add(product);
-                    //db.SaveChanges();
-                    newproduct.UPC = collection["UPC"];
-                    newproduct.ProductName = collection["ProductName"];
-                    newproduct.CompanyName = collection["CompanyName"];
-                    newproduct.ParentCompany = collection["ParentCompany"];
-                    newproduct.Weight = double.Parse(collection["weight"]);
-                    newproduct.TotalWeight = double.Parse(collection["TotalWeight"]);
-                    newproduct.NumberOfConstituent = uint.Parse(collection["NumberOfConstituent"]);
-                    _names.Add(newproduct);
-                }
-
-                //return RedirectToAction("Index");
-
-
-                return (Json(ccollection, JsonRequestBehavior.AllowGet));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(sampleData);
         }
 
         // GET: ProductManage/Edit/5
@@ -182,19 +191,15 @@ namespace Recycling.Controllers
             }
         }
 
-        // GET: ProductManage/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
         // POST: ProductManage/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
+                var product = new Product{ UPC = id.ToString()};
+                db.Products.Remove(product);
 
                 return RedirectToAction("Index");
             }
@@ -222,6 +227,23 @@ namespace Recycling.Controllers
                 ProductName = "Cookies2",
                 NumberOfConstituent = 2
             },
+        };
+
+        static ProductView sampleData = new ProductView
+        {
+            UPC = "12345678901",
+            ProductName = "Oreo",
+            CompanyName = "Kraft",
+            ParentCompany = "Not Applicable",
+            Weight = 500,
+            TotalWeight = 550,
+            Region = "HRM",
+            Category = "Cookies",
+            ConstituentName = "Paperbox",
+            PartWeight = 50,
+            Recyclability = "Blue Bag I",
+            Type = "Paper",
+            ImageURL = "~/Content/Images/Uploaded/2222.jpg"
         };
 
     }

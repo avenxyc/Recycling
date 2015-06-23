@@ -18,9 +18,9 @@ namespace Recycling.Models
         [Column(Order = 1)]
         [ForeignKey("Constituent")]
         public string ConstituentName { get; set; }
-        public double Percentage { get; set; }
         public double PartWeight { get; set; }
 
+        //TODO: Calculate the percentage when user needs it.
 
         public virtual Product Product { get; set; }
         public virtual Constituent Constituent { get; set; }

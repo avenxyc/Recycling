@@ -46,20 +46,7 @@ namespace Recycling.Migrations
             //  }
             //);
 
-            for (int i = 0; i < 1000; i++)
-            {
-                context.Products.AddOrUpdate(
-                p => p.UPC,
-                new Product
-                {
-                    UPC = i.ToString(),
-                    ProductName = "Oreo" + i.ToString(),
-                    CompanyName = "Christie" + i.ToString(),
-                    Weight = 200,
-                    TotalWeight = 250,
-                    ParentCompany = "Kraft" + i.ToString(),
-                });
-            }
+           
         }
     }
 }
